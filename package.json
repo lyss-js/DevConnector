@@ -1,0 +1,19 @@
+{
+  "name": "devconnectorv1",
+  "version": "1.0.0",
+  "description": "Social network for developers",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyss-js/DevConnector.git"
+  },
+  "author": "Alyssa Durante",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lyss-js/DevConnector/issues"
+  },
+  "homepage": "https://github.com/lyss-js/DevConnector#readme"
+}
