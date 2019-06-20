@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Label, Input, Card, CardBody, Row, Col } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Login from "../auth/Login";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -60,6 +60,12 @@ const Landing = props => {
       console.error(err.response.data);
     }
   };
+
+  // Redirect if logged in
+  if (props.isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <div className="container landing">
       <Row>
@@ -130,9 +136,15 @@ const Landing = props => {
 
 Landing.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 };
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { setAlert, register }
 )(Landing);

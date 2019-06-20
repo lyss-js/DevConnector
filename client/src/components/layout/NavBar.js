@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Landing from "./Landing";
 import Register from "../auth/Register";
@@ -12,6 +12,9 @@ import {
   NavLink,
   NavbarToggler
 } from "reactstrap";
+import { connect } from "react-redux";
+import { logout } from "../../actions/auth";
+import PropTypes from "prop-types";
 
 class NavBar extends Component {
   constructor(props) {
@@ -29,7 +32,21 @@ class NavBar extends Component {
     });
   }
 
-  render() {
+  render(props) {
+    const {
+      auth: { isAuthenticated, loading },
+      logout
+    } = this.props;
+    const authLinks = (
+      <NavLink tag={Link} onClick={logout} to="/">
+        Logout
+      </NavLink>
+    );
+    const guestLinks = (
+      <NavLink tag={Link} to="/login">
+        Login
+      </NavLink>
+    );
     return (
       <div>
         <Navbar color="dark" dark expand="md">
@@ -40,11 +57,9 @@ class NavBar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink tag={Link} to="/login">
-                  Login
-                </NavLink>
-              </NavItem>
+              {!loading && (
+                <NavItem>{isAuthenticated ? authLinks : guestLinks}</NavItem>
+              )}
             </Nav>
           </Collapse>
         </Navbar>
@@ -71,5 +86,16 @@ class NavBar extends Component {
       </ul>
     </nav>
     */
+NavBar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
 
-export default NavBar;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logout }
+)(NavBar);

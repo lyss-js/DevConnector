@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Button, Label, Input, Card, CardBody } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import Landing from "../layout/Landing";
-function Login() {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../../actions/auth";
+
+const Login = props => {
   const margin = { marginTop: 15 };
   const center = {
     textAlign: "center",
@@ -34,6 +38,7 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = async e => {
     e.preventDefault();
+    props.login(email, password);
     console.log(formData);
     const newUser = {
       email,
@@ -54,6 +59,11 @@ function Login() {
       console.error(err.response.data);
     }
   };
+
+  // Redirect if logged in
+  if (props.isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <div style={format}>
       <Card style={cardWidth}>
@@ -103,6 +113,17 @@ function Login() {
       </Card>
     </div>
   );
-}
+};
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(
+  mapStateToProps,
+  { login }
+)(Login);
