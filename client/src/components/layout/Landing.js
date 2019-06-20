@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import { Button, Label, Input, Card, CardBody } from "reactstrap";
+import { Button, Label, Input, Card, CardBody, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import Login from "../auth/Login";
 import axios from "axios";
-function Landing() {
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
+import { register } from "../../actions/auth";
+import PropTypes from "prop-types";
+
+const Landing = props => {
   const margin = { marginTop: 15 };
   const center = {
     textAlign: "center",
@@ -13,6 +18,9 @@ function Landing() {
   };
   const smallFont = {
     fontSize: "0.8rem"
+  };
+  const container = {
+    height: "100vh"
   };
 
   const [formData, setFormData] = useState({
@@ -27,7 +35,11 @@ function Landing() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = async e => {
     e.preventDefault();
-    console.log(formData);
+    if (password.length < 6) {
+      props.setAlert("Password invalid", "danger");
+    } else {
+      props.register({ name, email, password });
+    }
     const newUser = {
       name,
       email,
@@ -49,25 +61,23 @@ function Landing() {
     }
   };
   return (
-    <div>
-      <section className="landing">
-        <div className="landing-inner">
-          <section className="font-body">
-            <h1 className="display-3">Built by developers</h1>
-            <p className="lead">for developers</p>
-          </section>
+    <div className="container landing">
+      <Row>
+        <Col lg={6}>
+          <img src="https://whatif-assets-cdn.s3.amazonaws.com/images/home-illo-team-3.svg" />
+        </Col>
+        <Col lg={6}>
           <Card>
             <CardBody>
               <h3 className="text-center">Register Now</h3>
               <form onSubmit={e => onSubmit(e)}>
-                <Label for="username">Username</Label>
+                <Label for="username">Name</Label>
                 <Input
                   type="text"
                   placeholder="Name"
                   name="name"
                   value={name}
                   onChange={e => onChange(e)}
-                  required
                 />
                 <Label for="email" style={margin}>
                   Email
@@ -78,7 +88,6 @@ function Landing() {
                   name="email"
                   value={email}
                   onChange={e => onChange(e)}
-                  required
                 />
                 <Label for="password" style={margin}>
                   Password
@@ -89,7 +98,6 @@ function Landing() {
                   name="password"
                   value={password}
                   onChange={e => onChange(e)}
-                  required
                 />
                 <p style={smallFont}>
                   Make sure it's at least 8 characters including a number and a
@@ -114,10 +122,17 @@ function Landing() {
               </form>
             </CardBody>
           </Card>
-        </div>
-      </section>
+        </Col>
+      </Row>
     </div>
   );
-}
+};
 
-export default Landing;
+Landing.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
+};
+export default connect(
+  null,
+  { setAlert, register }
+)(Landing);

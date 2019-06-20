@@ -20,6 +20,7 @@ body {
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 a {
   color: #ffffff;
@@ -28,50 +29,11 @@ a {
 ul {
   list-style: none;
 }
-img {
-  width: 100%;
-}
-.navbar {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding: 0.7rem 2rem;
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  top: 0;
-}
-.navbar ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.navbar a {
-  padding: 0.45rem;
-  margin: 0 0.25rem;
-}
-.navbar a:hover {
-  color: #20a8d8;
-}
+
 .landing {
   position: relative;
   height: 100vh;
-  background: #0052d4;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(#6fb1fc),
-    color-stop(#4364f7),
-    to(#0052d4)
-  );
-  background: linear-gradient(to right, #6fb1fc, #4364f7, #0052d4);
+  margin-top: 4%;
 }
 .landing-inner {
   color: #333;
@@ -92,17 +54,6 @@ img {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-.card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding-top: 1%;
-  width: 40%;
-  margin-top: -10%;
-}
-.card-inner {
-  padding-left: 6%;
-  width: 100%;
-}
 
 input {
   width: 94%;
@@ -119,4 +70,9 @@ input {
 .disclaimer {
   color: #6a737d;
   font-size: 0.8rem;
+}
+
+.alert-danger {
+  background: "#dc3545";
+  color: #fff;
 }
