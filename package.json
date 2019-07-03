@@ -27,6 +27,7 @@
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.10",
+    "react-typist": "^2.0.5",
     "request": "^2.88.0",
     "uuid": "^3.3.2"
   },

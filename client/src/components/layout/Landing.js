@@ -6,6 +6,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { register } from "../../actions/auth";
+import Typist from "react-typist";
 import PropTypes from "prop-types";
 
 const Landing = props => {
@@ -22,11 +23,21 @@ const Landing = props => {
   const container = {
     height: "100vh"
   };
+  const typewriter = {
+    color: "#ffffff",
+    fontWeight: 700
+  };
+  const card = {
+    width: "40%",
+    marginLeft: "auto",
+    marginRight: "auto"
+  };
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
+    typing: true
   });
 
   const { name, email, password } = formData;
@@ -65,71 +76,92 @@ const Landing = props => {
   if (props.isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
-
+  const done = () => {
+    this.setState({ typing: false }, () => {
+      setTimeout(
+        () => this.setState({ typing: true }),
+        this.props.timeout || 1200
+      );
+    });
+  };
   return (
-    <div className="container landing">
-      <Row>
-        <Col lg={6}>
-          <img src="https://whatif-assets-cdn.s3.amazonaws.com/images/home-illo-team-3.svg" />
-        </Col>
-        <Col lg={6}>
-          <Card>
-            <CardBody>
-              <h3 className="text-center">Register Now</h3>
-              <form onSubmit={e => onSubmit(e)}>
-                <Label for="username">Name</Label>
-                <Input
-                  type="text"
-                  placeholder="Name"
-                  name="name"
-                  value={name}
-                  onChange={e => onChange(e)}
-                />
-                <Label for="email" style={margin}>
-                  Email
-                </Label>
-                <Input
-                  type="text"
-                  placeholder="Email"
-                  name="email"
-                  value={email}
-                  onChange={e => onChange(e)}
-                />
-                <Label for="password" style={margin}>
-                  Password
-                </Label>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  onChange={e => onChange(e)}
-                />
-                <p style={smallFont}>
-                  Make sure it's at least 8 characters including a number and a
-                  lowercase letter
-                </p>
-                <div style={center}>
-                  <Button type="submit" color="success" style={center}>
-                    Register to DevConnection
-                  </Button>
-                </div>
-                <p className="disclaimer text-center">
-                  Already have an account?{" "}
-                  <Link to="/login" component={Login}>
-                    Login
-                  </Link>
-                </p>
-                <p className="disclaimer">
-                  By clicking “Sign up for DevConnection, you agree to our Terms
-                  of Service and Privacy Statement. We’ll occasionally send you
-                  account related emails.
-                </p>
-              </form>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+    <div style={{ backgroundColor: "#2c91fb" }}>
+      <div className="container landing">
+        <Row>
+          <Col lg={12}>
+            <div className="display-3 text-center">Connect with </div>
+            <div className="display-2 text-center" style={typewriter}>
+              {" "}
+              <Typist>
+                <span> engineers</span>
+                <Typist.Backspace count={10} delay={200} />
+                <span> developers</span>
+                <Typist.Backspace count={11} delay={200} />
+                <span> geeks</span>
+                <Typist.Backspace count={5} delay={200} />
+                <span>coders</span>
+                <Typist.Backspace count={6} delay={200} />
+                <span>nerds</span>
+              </Typist>
+            </div>
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col lg={12}>
+            <form onSubmit={e => onSubmit(e)} style={card}>
+              <Label for="username">Name</Label>
+              <Input
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={name}
+                onChange={e => onChange(e)}
+              />
+              <Label for="email" style={margin}>
+                Email
+              </Label>
+              <Input
+                type="text"
+                placeholder="Email"
+                name="email"
+                value={email}
+                onChange={e => onChange(e)}
+              />
+              <Label for="password" style={margin}>
+                Password
+              </Label>
+              <Input
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={password}
+                onChange={e => onChange(e)}
+              />
+              <p style={smallFont}>
+                Make sure it's at least 8 characters including a number and a
+                lowercase letter
+              </p>
+              <div style={center}>
+                <Button type="submit" color="success" style={center}>
+                  Register to DevConnection
+                </Button>
+              </div>
+              <p className="disclaimer text-center">
+                Already have an account?{" "}
+                <Link to="/login" component={Login}>
+                  Login
+                </Link>
+              </p>
+              <p className="disclaimer">
+                By clicking “Sign up for DevConnection, you agree to our Terms
+                of Service and Privacy Statement. We’ll occasionally send you
+                account related emails.
+              </p>
+            </form>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 };

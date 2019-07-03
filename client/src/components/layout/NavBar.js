@@ -10,7 +10,11 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavbarToggler
+  NavbarToggler,
+  UncontrolledDropdown,
+  DropdownMenu,
+  DropdownToggle,
+  DropdownItem
 } from "reactstrap";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
@@ -34,13 +38,23 @@ class NavBar extends Component {
 
   render(props) {
     const {
-      auth: { isAuthenticated, loading },
+      auth: { isAuthenticated, loading, user },
       logout
     } = this.props;
     const authLinks = (
-      <NavLink tag={Link} onClick={logout} to="/">
-        Logout
-      </NavLink>
+      <UncontrolledDropdown nav inNavbar>
+        <DropdownToggle nav caret />
+        <DropdownMenu right>
+          <DropdownItem>
+            <NavLink tag={Link} onClick={logout} to="/">
+              Logout
+            </NavLink>
+          </DropdownItem>
+          <DropdownItem>Option 2</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>Reset</DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
     );
     const guestLinks = (
       <NavLink tag={Link} to="/login">
@@ -58,7 +72,7 @@ class NavBar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               {!loading && (
-                <NavItem>{isAuthenticated ? authLinks : guestLinks}</NavItem>
+                <span>{isAuthenticated ? authLinks : guestLinks}</span>
               )}
             </Nav>
           </Collapse>

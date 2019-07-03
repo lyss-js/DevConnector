@@ -7,6 +7,8 @@ import "./App.css";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Alerts from "./components/layout/Alerts";
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/routing/PrivateRoute";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 // Redux
@@ -30,6 +32,7 @@ const App = () => {
           <Route exact path="/" component={Landing} />
           <Switch>
             <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
         </Fragment>
       </Router>
